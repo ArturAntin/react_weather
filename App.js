@@ -8,20 +8,12 @@ export default class App extends React.Component {
   state = {
     isLoading: true,
     data: null,
-    error: null,
   };
 
   componentDidMount() {
-    Geolocation.getCurrentPosition(
-      (position) => {
-        this.fetchWeather(position.coords.latitude, position.coords.longitude);
-      },
-      (error) => {
-        this.setState({
-          error: "Error Getting Weather Condtions ${error}",
-        });
-      }
-    );
+    Geolocation.getCurrentPosition((position) => {
+      this.fetchWeather(position.coords.latitude, position.coords.longitude);
+    });
   }
 
   fetchWeather(lat, lon) {
@@ -30,19 +22,9 @@ export default class App extends React.Component {
       data: null,
     });
     if (lat == null || lon == null) {
-      Geolocation.getCurrentPosition(
-        (position) => {
-          this.fetchWeather(
-            position.coords.latitude,
-            position.coords.longitude
-          );
-        },
-        (error) => {
-          this.setState({
-            error: "Error Getting Weather Condtions ${error}",
-          });
-        }
-      );
+      Geolocation.getCurrentPosition((position) => {
+        this.fetchWeather(position.coords.latitude, position.coords.longitude);
+      });
       return;
     }
 
